@@ -1,0 +1,357 @@
+//Crear el modelo Product
+        [Key]
+        public int ProductID { get; set; }
+
+        [StringLength(30, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 3)]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        [Display(Name = "Descripción Producto")]
+        public string Description { get; set; }
+
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        public decimal Price { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Last Buy")]
+        public DateTime LastBuy { get; set; }
+
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
+        public float Stock { get; set; }
+
+
+        [DataType(DataType.MultilineText)]
+        public string Remarks { get; set; }
+        //public string DeleteMe { get; set; }
+
+        //Relacion de muchos a uno
+        public ICollection<SupplierProduct> SupplierProducts { get; set; }
+
+
+
+//Crear el modelo DocumentType ------------------------------------------------------
+
+        [Key]
+        public int DocumentTypeID { get; set; }
+
+        [Display(Name = "Documento")]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        [StringLength(30, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 3)]
+        public string Document { get; set; }
+
+        //relacion con la tabla empleados
+        public virtual ICollection<Employee> Employees { get; set; }
+        //relación con la tabla Customers
+        public virtual ICollection<Customer> Customers { get; set; }
+
+
+//Crear el modelo Supplier  -------------------------------
+        [Key]
+        public int SupplierID { get; set; }
+
+        [StringLength(30, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 3)]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        [Display(Name = "Supplier Name")]
+        public string Name { get; set; }
+
+        [StringLength(30, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 3)]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        [Display(Name = "Contact First Name")]
+        public string ContactFirstName { get; set; }
+
+        [StringLength(30, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 3)]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        [Display(Name = "Contact Last Name")]
+        public string ContactLastName { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [StringLength(30, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 3)]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        public string Phone { get; set; }
+
+        [StringLength(30, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 3)]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        public string Address { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        public string EMail { get; set; }
+
+        //Relacion de muchos a uno
+        public ICollection<SupplierProduct> SupplierProducts { get; set; }
+
+
+//Crear el modelo Customer ------------------
+        [Key]
+        public int CustomerID { get; set; }
+
+        [StringLength(30, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 3)]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [StringLength(30, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 3)]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [StringLength(30, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 3)]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        public string Phone { get; set; }
+
+        [StringLength(30, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 3)]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        public string Address { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        public string EMail { get; set; }
+
+        [StringLength(25, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 5)]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        [Display(Name = "Document")]
+        public string Document { get; set; }
+
+  [NotMapped]
+        public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }
+
+        //Para relacionar con el maestro de documentos si se coloca int? (relacion opcional) la relacion es de 0 a muchos
+        public int DocumentTypeID { get; set; }
+
+        //relacionamiento con la tabla de documentType
+
+        public virtual DocumentType DocumentType { get; set; }
+
+
+
+//Crear el modelo SupplierProduct  ---------------------------------
+
+        [Key]
+        public int SupplierProductID { get; set; }
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        public decimal Price { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Last Buy")]
+        public DateTime LastBuy { get; set; }
+
+
+        public int SupplierID { get; set; }
+        public int ProductID { get; set; }
+
+        //para hacer las relaciones con el mdelo de Supplier
+        public virtual Supplier Supplier { get; set; }
+
+        //para hacer las relaciones con el mdelo de Product
+        public virtual Product Product { get; set; }
+
+
+
+//Crear el modelo Employee -------------------------------------------------
+
+[Key]
+        public int EmployeeID { get; set; }
+
+        //Cambiar el nombre de la Table en la Base de Datos
+
+        //[Column("Nombres")]
+        //------------
+        [Display(Name = "Nombres")]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        [StringLength(30, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 3)]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Apellidos")]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        [StringLength(50, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 2)]
+        public string LastName { get; set; }
+        
+        [Display(Name = "Salario")]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        //FORMATO A LOS DATOS DisplayFormat
+        [DisplayFormat(DataFormatString ="{0:C2}", ApplyFormatInEditMode=false )]
+        public decimal Salary { get; set; }
+        
+        [Display(Name = "Porcentaje")]
+        [DisplayFormat(DataFormatString = "{0:P2}", ApplyFormatInEditMode = false)]
+        public float BonusPercent { get; set; }
+        
+        [Display(Name = "Date Of Birth")]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        //Solo pone la fecha no la hora
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        public DateTime  DateOfBirth { get; set; }
+
+        [Display(Name = "Start Time")]
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        //Solo pone la hora no la fecha
+        [DataType(DataType.Time)]
+        [DisplayFormat(DataFormatString = "{0:hh:mm}", ApplyFormatInEditMode = true)]
+        public DateTime StartTime { get; set; }
+        
+        [Display(Name = "Correo")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+
+        [Display(Name = "Página de Referencia")]
+        [DataType(DataType.Url)]
+        public string URL { get; set; }
+
+        //Cambiar nombre de la llave foránea no recomendado
+        //[ForeignKey("xxxxxx")]
+
+        [Required(ErrorMessage = "Usted debe de Ingresar un {0}")]
+        [Display(Name = "Tipo de Documento")]
+        public int DocumentTypeID { get; set; }
+
+        //Campo calculado que no se encuentra en la Base de datos
+
+        [NotMapped]
+        public int Age { get {return DateTime.Now.Year - DateOfBirth.Year ; } }
+
+        //Relaciona de con el model de DocumentType
+        public virtual DocumentType DocumentType { get; set; }
+
+----------------------------------------------------------------------------------------------------------------------
+## despues de crear todos los modelos, build a  la aplicación y configurar el webconfig con los datos de tu servidor,
+## luego compilar toda la aplicación para recien crear los controladores. 
+
+<connectionStrings>
+    <add name="DefaultConnection" 
+         connectionString="Data Source=LENOVO-PC\SQLTABULAR;Initial Catalog=Sesion2;Integrated Security=True"
+      providerName="System.Data.SqlClient" />
+</connectionStrings>
+
+----------------------------------------------------------------------------------------------------------------------
+
+
+///Adicionar un controlador para cada uno de los modelos  ----------------------
+
+en el primer modelo creado, modificar nuevamente el webconfig para borrar los caracteres especiales creados. 
+
+//Modificar el web config  -----------------------------------
+
+
+<connectionStrings>
+    <add name="DefaultConnection" 
+         connectionString="Data Source=LENOVO-PC\SQLTABULAR;Initial Catalog=Sesion2;Integrated Security=True"
+      providerName="System.Data.SqlClient" />
+    <add name="Sesion2Context"
+         connectionString="Data Source=LENOVO-PC\SQLTABULAR;Initial Catalog=Sesion2;Integrated Security=True"
+      providerName="System.Data.SqlClient" />
+</connectionStrings>
+
+Terminar de crear los demas controladores.
+//----------------------------------------------------------------------------------------------
+
+
+
+//Adicionar Migraciones automáticas  ------------------------------------------------------------------
+
+herramientas / administrador de paquetes / console
+Revisar el nombre del context en la carpeta models
+
+Enable-Migrations –ContextTypeName  VentasFinalContext  –EnableAutomaticMigrations
+
+
+//En la carpeta Migration modificar la habilitación en la clase Configuration -----------.-----------------------
+
+public Configuration()
+        {
+            //Activar las migraciones automáticas
+            AutomaticMigrationDataLossAllowed = true;
+            //----------
+
+            AutomaticMigrationsEnabled = true;
+        }
+
+
+// //Modificar el  archivo Global.asax -----------------------------------------------------------------
+
+public class MvcApplication : System.Web.HttpApplication
+    {
+        protected void Application_Start()
+        {
+            //Verifica si el modelo ha cambiado
+            Database.SetInitializer(new 
+                MigrateDatabaseToLatestVersion<Models.NOMBREDETUCONTEXTO,
+                Migrations.Configuration>());
+            //-----------------------
+            AreaRegistration.RegisterAllAreas();
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+    }
+
+
+//En el context creado no permitir la eliminación en cascada---------------------------------------
+  //No permite el eliminado en cascada
+        //-------------------
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+        }
+        //
+
+
+
+// modificar el documentTypeController 
+
+en el POST: /DocumentType/Delete/5
+
+ DocumentType documenttype = db.DocumentTypes.Find(id);
+            db.DocumentTypes.Remove(documenttype);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                
+                //throw;
+            }
+            return RedirectToAction("Index");
+
+
+
+//y el try catch 
+
+
+
+
+//En el archivo _Layout de la carpeta view/Shared
+
+		   <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Maestros<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
+                            <li>@Html.ActionLink("Document Types", "Index", "DocumentTypes")</li>
+                            <li>@Html.ActionLink("Employees", "Index", "Employees")</li>
+                            <li>@Html.ActionLink("Products", "Index", "Products")</li>
+                            <li>@Html.ActionLink("Suppliers", "Index", "Suppliers")</li>
+                            <li>@Html.ActionLink("Supplier Products", "Index", "SupplierProducts")</li>
+                        </ul>
+                    </li
+
+
+
+//	Insertar 3 registros por tabla
+	Controlar que la aplicación no se caiga cuando se hace eliminación e cascada
+
+
+
+
+
+
+
+
+
+
+
